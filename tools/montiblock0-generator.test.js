@@ -109,6 +109,54 @@ test('includes Monti signature (4D4E)', () => {
     }
 });
 
+// Test 11: Error handling - null input
+test('throws error for null input', () => {
+    try {
+        generateMontiBlock0(null);
+        throw new Error('Should have thrown an error for null input');
+    } catch (error) {
+        if (!error.message.includes('must be a non-empty string')) {
+            throw new Error('Should throw correct error message for null input');
+        }
+    }
+});
+
+// Test 12: Error handling - undefined input
+test('throws error for undefined input', () => {
+    try {
+        generateMontiBlock0(undefined);
+        throw new Error('Should have thrown an error for undefined input');
+    } catch (error) {
+        if (!error.message.includes('must be a non-empty string')) {
+            throw new Error('Should throw correct error message for undefined input');
+        }
+    }
+});
+
+// Test 13: Error handling - empty string
+test('throws error for empty string', () => {
+    try {
+        generateMontiBlock0('');
+        throw new Error('Should have thrown an error for empty string');
+    } catch (error) {
+        if (!error.message.includes('must be a non-empty string')) {
+            throw new Error('Should throw correct error message for empty string');
+        }
+    }
+});
+
+// Test 14: Error handling - invalid hex characters
+test('throws error for invalid hex characters', () => {
+    try {
+        generateMontiBlock0('DEADGZEF');
+        throw new Error('Should have thrown an error for invalid hex characters');
+    } catch (error) {
+        if (!error.message.includes('invalid characters')) {
+            throw new Error('Should throw correct error message for invalid characters');
+        }
+    }
+});
+
 // Summary
 console.log('\n' + '='.repeat(50));
 console.log(`Tests passed: ${passed}`);

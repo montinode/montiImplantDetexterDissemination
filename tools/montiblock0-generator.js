@@ -9,7 +9,19 @@
 function generateMontiBlock0(targetUID) {
     // 1. PARSE TARGET UID (4 Bytes)
     // Example: "DE AD BE EF"
-    const uidBytes = targetUID.replace(/\s/g, '').match(/.{1,2}/g).map(byte => parseInt(byte, 16));
+    
+    // Validate input
+    if (!targetUID || typeof targetUID !== 'string') {
+        throw new Error(">> ERROR: UID must be a non-empty string");
+    }
+    
+    // Remove spaces and validate hex characters
+    const cleanUID = targetUID.replace(/\s/g, '');
+    if (!/^[0-9A-Fa-f]+$/.test(cleanUID)) {
+        throw new Error(">> ERROR: UID contains invalid characters (only hex digits 0-9, A-F allowed)");
+    }
+    
+    const uidBytes = cleanUID.match(/.{1,2}/g).map(byte => parseInt(byte, 16));
 
     if (uidBytes.length !== 4) {
         throw new Error(">> ERROR: ONLY 4-BYTE UIDS SUPPORTED FOR CLASSIC CLONING");
